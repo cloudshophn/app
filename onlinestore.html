@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CloudShop</title>
+  <link rel="stylesheet" href="onlinestore/assets/styles/generalstyles.css" />
+  <link rel="stylesheet" href="onlinestore/assets/styles/generalmediaquieres.css" />
+  <link rel="stylesheet" href="onlinestore/assets/styles/filterbylocation.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="onlinestore/assets/images/favicon.ico" type="image/x-icon">
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://i.ibb.co/KpHpPfWF/cloudshop-pic.jpg" type="image/png">
+
+</head>
+<body>
+
+<header class="main-header">
+  <!-- Versión escritorio -->
+  <div class="brand">
+    <h1>CloudShop</h1>
+    <p class="subtitle">Facilidad, Alcance, Seguridad, Accion</p>
+  </div>
+
+  <div class="search-container">
+    <span class="material-icons icon">search</span>
+    <input type="text" placeholder="Buscar productos por nombre o marca" id="searchInput" />
+    <span class="material-icons icon clear-icon" id="clearSearch" style="display: none;">close</span>
+    <div class="search-results" id="searchResults" aria-live="polite"></div>
+  </div>
+
+  <nav class="header-icons">
+    <div class="icon-with-text" id="openCartModal">
+      <span class="material-icons icon">shopping_cart</span>
+      <p>Carrito</p>
+    </div>
+    <div class="icon-with-text" id="openOffersModal">
+      <span class="material-icons icon">local_offer</span>
+      <p>Ofertas</p>
+    </div>
+    <div class="icon-with-text" id="openSellModal">
+      <span class="material-icons icon">storefront</span>
+      <p>Vender</p>
+    </div>
+    <div class="icon-with-text" id="toggleMode">
+      <span class="material-icons icon">light_mode</span>
+      <p>Modo</p>
+    </div>
+    <div class="icon-with-text">
+      <a href="https://cloudshophn.github.io/app/" class="back-link">
+        <span class="material-icons icon">arrow_back</span>
+        <p>Inicio</p>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Versión móvil -->
+  <div class="mobile-header">
+    <div class="mobile-brand-container">
+      <div class="mobile-brand">
+        <h1>CloudShop</h1>
+        <p class="subtitle">Facilidad, Alcance, Seguridad, Accion</p>
+      </div>
+      <div class="mobile-buttons">
+        <button class="mobile-menu-item" id="openCartModalMobile">
+          <span class="material-icons">shopping_cart</span>
+        </button>
+        <button class="filter-toggle" id="filterToggle">
+          <span class="material-icons">filter_list</span>
+        </button>
+        <button class="menu-toggle" id="menuToggle">
+          <span class="material-icons">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mobile-search-container">
+      <span class="material-icons icon">search</span>
+      <input type="text" id="mobileSearchInput" placeholder="Buscar productos..." />
+      <span class="material-icons icon clear-icon mobile-clear-search" style="display: none;">close</span>
+      <div class="search-results" id="mobileSearchResults" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <nav class="mobile-nav" id="mobileNav">
+    <button class="close-menu" id="closeMenu">
+      <span class="material-icons">close</span>
+    </button>
+    <div class="mobile-menu-items">
+      <div class="mobile-menu-item" id="openOffersModalMobile">
+        <span class="material-icons">local_offer</span> Ofertas
+      </div>
+      <div class="mobile-menu-item" id="openSellModalMobile">
+        <span class="material-icons">storefront</span> Vender
+      </div>
+      <div class="mobile-menu-item" id="mobileToggleMode">
+        <span class="material-icons">light_mode</span> Modo
+      </div>
+      <div class="mobile-menu-item">
+        <a href="https://cloudshophn.github.io/app/" class="mobile-link">
+          <span class="material-icons">arrow_back</span> Inicio
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="main-content">
+  <div class="filters-container" id="filtersContainer">
+    <button class="toggle-filters" id="toggleFilters">
+      <span class="material-icons">filter_list</span>
+    </button>
+    <div class="filters-content">
+      <button class="close-filters" id="closeFilters">
+        <span class="material-icons">close</span>
+      </button>
+      <h3>Rubros</h3>
+      <p style="font-size: 12px;">Seleccione su rubro de interés</p>
+      <div class="filter-group">
+        <label class="filter-item">
+          <input type="radio" name="rubro" value="todo" checked>
+          <span><span class="material-icons">all_inclusive</span> Todo</span>
+        </label>
+        <label class="filter-item">
+          <input type="radio" name="rubro" value="moda">
+          <span><span class="material-icons">checkroom</span> Moda</span>
+        </label>
+        <label class="filter-item">
+          <input type="radio" name="rubro" value="tecnologia">
+          <span><span class="material-icons">devices</span> Tecnología</span>
+        </label>
+        <label class="filter-item">
+          <input type="radio" name="rubro" value="ferreteria">
+          <span><span class="material-icons">hardware</span> Ferretería</span>
+        </label>
+      </div>
+      <h3>Categorías</h3>
+      <div class="filter-group" id="categoriesContainer">
+        <!-- Las categorías se llenarán dinámicamente -->
+      </div>
+      <div id="genresSection" class="hidden">
+        <h3 id="genresLabel">Géneros</h3>
+        <div class="filter-group" id="genresContainer">
+          <!-- Los géneros se llenarán dinámicamente para Moda -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="products-container" id="productsContainer"></div>
+</main>
+
+<div class="modalcarrito" id="cartModal">
+  <div class="modal-content-carrito">
+    <div class="modal-header-carrito">
+      <h2>Carrito de Compras</h2>
+      <button class="close-modal" id="closeCartModal">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="modal-body-carrito">
+      <!-- Contenido del carrito se añadirá aquí -->
+    </div>
+  </div>
+</div>
+
+<div class="modalofe" id="offersModal">
+  <div class="modal-content-ofe">
+    <div class="modal-header-ofe">
+      <h2>Ofertas Especiales</h2>
+      <button class="close-modal-ofe" id="closeOffersModal">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="modal-body-ofe">
+      <!-- Contenido de ofertas se añadirá aquí -->
+    </div>
+  </div>
+</div>
+
+<div class="modalsell" id="sellModal">
+  <div class="modal-content-sell">
+    <div class="modal-header-sell">
+      <h2>Vender Productos</h2>
+      <button class="close-modal-sell" id="closeSellModal">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div class="modal-body-sell">
+      <div class="sell-intro">
+        <p>¿Eres fabricante, distribuidor o tienes un negocio?</p>
+        <p class="sell-subtext">Regístrate como vendedor y llega a más clientes. Nos contactaremos contigo en menos de 24 horas.</p>
+        <p class="sell-privacy" style="font-size: 0.85rem; color: #888; margin-top: 10px;">
+          <span class="material-icons" style="font-size: 1rem; vertical-align: middle;">lock</span>
+          Todos los datos ingresados están protegidos y no serán divulgados.
+        </p>
+      </div>
+      <form id="sellForm" class="sell-form">
+        <div class="form-group-sell">
+          <label for="name-sell">Nombre completo*</label>
+          <input type="text" id="name-sell" name="name" required placeholder="Mi nombre">
+        </div>
+        <div class="form-group-sell">
+          <label for="rubro-sell">Rubro*</label>
+          <select id="rubro-sell" name="rubro" required>
+            <option value="" disabled selected>¿Qué vendes?</option>
+            <option value="Moda">Moda (ropa, accesorios)</option>
+            <option value="Tecnología">Tecnología</option>
+            <option value="Ferretería">Ferretería/herramientas</option>
+          </select>
+        </div>
+        <div class="form-group-sell">
+          <label for="departamento-sell">Departamento*</label>
+          <input type="text" id="departamento-sell" name="departamento" required placeholder="Francisco Morazán">
+        </div>
+        <div class="form-group-sell">
+          <label for="ciudad-sell">Ciudad*</label>
+          <input type="text" id="ciudad-sell" name="ciudad" required placeholder="Tegucigalpa">
+        </div>
+        <div class="form-group-sell">
+          <label for="colonia-sell">Dirección exacta*</label>
+          <textarea id="colonia-sell" name="colonia" rows="2" required placeholder="Colonia..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn-sell">
+          <span class="btn-icon">💼</span> Quiero vender
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer class="simple-footer">
+  <div class="footer-container">
+    <div class="footer-content">
+      <div class="footer-contact">
+        <a href="mailto:cloudshophn@gmail.com" class="contact-item" aria-label="Email">
+          <span class="material-icons">email</span> cloudshophn@gmail.com
+        </a>
+        <a href="tel:+50488313413" class="contact-item" aria-label="Phone">
+          <span class="material-icons">phone</span> +504 8811-8862
+        </a>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/share/1C2zVrUgYi/" target="_blank" class="social-icon" aria-label="Facebook">
+          <i class="bx bxl-facebook" style="color: #3b5998;"></i>
+        </a>
+        <a href="https://www.instagram.com/cloudshophn_?igsh=bmhydmJlZWtzYTFn" target="_blank" class="social-icon" aria-label="Instagram">
+          <i class="bx bxl-instagram" style="color: #E4405F;"></i>
+        </a>
+        <a href="https://whatsapp.com/channel/0029VbAlIDXJpe8iRdKup401" target="_blank" class="social-icon" aria-label="WhatsApp">
+          <i class="bx bxl-whatsapp" style="color: #25D366;"></i>
+        </a>
+        <a href="https://www.tiktok.com/@cloudshophn_?_t=ZM-8zM8EWTJ3d2&_r=1" target="_blank" class="social-icon" aria-label="TikTok">
+          <i class="bx bxl-tiktok" style="color: #000000;"></i>
+        </a>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> CloudShop Todos los derechos reservados.</p>
+        <a href="/politicas" class="policy-link">Políticas</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+
+ <script> 
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (
+      e.key === 'F12' ||
+      (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) ||
+      (e.ctrlKey && e.key === 'u')
+    ) {
+      e.preventDefault();
+    }
+  });
+
+  document.addEventListener('selectstart', function(e) {
+    e.preventDefault();
+  });
+
+  window.addEventListener('devtoolschange', function(e) {
+    if (e.detail.isOpen) {
+      alert('Por favor, no intentes inspeccionar el código.');
+      window.location.reload();
+    }
+  });
+
+  //(function() {
+    //let devtools = { open: false };
+//    const threshold = 160;
+  //  const checkDevTools = function() {
+    //  const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+      //const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+//      if (widthThreshold || heightThreshold) {
+  //      if (!devtools.open) {
+    //      devtools.open = true;
+      //    alert('Acceso a herramientas de desarrollador detectado. La página se recargará.');
+        //  window.location.reload();
+        //}
+      //} else {
+     //   devtools.open = false;
+     // }
+    //};
+   // setInterval(checkDevTools, 1000);
+  //})();
+</script> 
+
+<script type="module" src="onlinestore/assets/scripts/cardproduction.js"></script>
+<script type="module" src="onlinestore/assets/scripts/headerscroll.js"></script>
+<script type="module" src="onlinestore/assets/scripts/filterbylocation.js"></script>
+<script type="module" src="onlinestore/assets/scripts/offers.js"></script>
+<script type="module" src="onlinestore/assets/scripts/counter.js"></script>
+<script type="module" src="onlinestore/assets/scripts/opti.js"></script>
+<script type="module" src="onlinestore/assets/scripts/filterproducts.js"></script>
+<script type="module" src="onlinestore/assets/scripts/searchbar.js"></script>
+<script src="onlinestore/assets/scripts/modals.js"></script>
+<script src="onlinestore/assets/scripts/filtermenutoggle.js"></script>
+<script src="onlinestore/assets/scripts/modechange.js"></script>
+</body>
+</html>

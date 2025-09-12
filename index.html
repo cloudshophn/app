@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudShop</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="informativesection/assets/styles/inicio.css">
+    <link rel="stylesheet" href="informativesection/assets/styles/mediaqueries.css">
+
+     <!-- Favicon -->
+    <link rel="icon" href="https://i.ibb.co/KpHpPfWF/cloudshop-pic.jpg" type="image/png">
+</head>
+
+<body>
+    <header class="mobile-header">
+        <span class="logo">CloudShop</span>
+        <button class="menu-toggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </header>
+
+    <nav class="sidebar">
+        <div class="logo-container">
+            <span class="logo">CloudShop</span>
+            <button class="sidebar-toggle" aria-label="Toggle sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <ul class="menu">
+            <li>
+                <a href="#inicio" class="menu-item active">
+                    <i class="fas fa-home menu-icon"></i>
+                    <span class="menu-text">Inicio</span>
+                </a>
+            </li>
+            <li>
+                <a href="#sobre-nosotros" class="menu-item">
+                    <i class="fas fa-info-circle menu-icon"></i>
+                    <span class="menu-text">Sobre Nosotros</span>
+                </a>
+            </li>
+            <li>
+                <a href="#contacto" class="menu-item">
+                    <i class="fas fa-envelope menu-icon"></i>
+                    <span class="menu-text">Contacto</span>
+                </a>
+            </li>
+            <li>
+                <a href="#unirte" class="menu-item">
+                    <i class="fas fa-user-plus menu-icon"></i>
+                    <span class="menu-text">Ser Parte</span>
+                </a>
+            </li>
+            <li>
+                <a href="#tienda" class="menu-item">
+                    <i class="fas fa-store menu-icon"></i>
+                    <span class="menu-text">Tienda</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <!-- SECCIÓN INICIO -->
+        <section id="inicio" class="section">
+            <div class="slider-container">
+                <!-- Slides -->
+                <div class="slide active" style="background-image: url('https://cdn.pixabay.com/photo/2019/03/29/04/35/tools-4088531_1280.jpg');">
+                    <div class="slide-content">
+                        <h1>CloudShop</h1>
+                        <p>Tu tienda de confianza Online</p>
+                        <div class="cta-buttons">
+                            <a href="https://finditaskit.github.io/tiendaonline/onlinestore" class="btn-primary">Visitar</a>
+                            <a href="#sobre-nosotros" class="btn-secondary">¿Que es CloudShop?</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slide" style="background-image: url('https://cdn.pixabay.com/photo/2016/11/22/21/57/apparel-1850804_1280.jpg');">
+                    <div class="slide-content">
+                        <h1>Todo lo que necesitas</h1>
+                        <p>Al alcance de un par de clics</p>
+                        <div class="cta-buttons">
+                            <a href="https://finditaskit.github.io/tiendaonline/onlinestore" class="btn-primary">Visitar</a>
+                            <a href="#contacto" class="btn-secondary">Obtén Cotización</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slide" style="background-image: url('https://cdn.pixabay.com/photo/2016/06/28/05/10/laptop-1483974_1280.jpg');">
+                    <div class="slide-content">
+                        <h1>Descubre nuestros productos</h1>
+                        <p>En nuestra tienda online</p>
+                        <div class="cta-buttons">
+                            <a href="https://finditaskit.github.io/tiendaonline/onlinestore" class="btn-primary">Visitar</a>
+                            <a href="#unirte" class="btn-secondary">¿Ser parte de CloudShop?</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slide" style="background-image: url('https://cdn.pixabay.com/photo/2021/02/03/00/10/receptionists-5975962_1280.jpg');">
+                    <div class="slide-content">
+                        <h1>¿No encuentras lo que buscas?</h1>
+                        <p>¡Te ayudamos!</p>
+                        <div class="cta-buttons">
+                            <a href="#contacto" class="btn-primary">Contacto</a>
+                            <a href="tel:+50488313413" class="btn-secondary">Llamar</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Controles del slider -->
+                <button class="slider-btn prev-btn" aria-label="Slide anterior">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="slider-btn next-btn" aria-label="Slide siguiente">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <!-- Indicadores -->
+                <div class="slider-indicators" role="tablist">
+                    <span class="indicator active" data-slide="0" role="tab" aria-selected="true" aria-label="Slide 1"></span>
+                    <span class="indicator" data-slide="1" role="tab" aria-selected="false" aria-label="Slide 2"></span>
+                    <span class="indicator" data-slide="2" role="tab" aria-selected="false" aria-label="Slide 3"></span>
+                    <span class="indicator" data-slide="3" role="tab" aria-selected="false" aria-label="Slide 4"></span>
+                </div>
+
+                <!-- Barra de búsqueda -->
+                <div class="search-overlay">
+                    <div class="search-wrapper">
+                        <div class="search-box">
+                            <input type="text" 
+                                   id="product-search" 
+                                   placeholder="Herramientas moda y Tecnología." 
+                                   autocomplete="off"
+                                   aria-label="Barra de búsqueda de productos">
+                            <button class="clear-btn" aria-label="Borrar búsqueda">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button class="search-btn" aria-label="Buscar">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <div class="search-results" id="search-results" aria-live="polite"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- linea divisora, se coloca donde uno desee -->
+            <hr class="section-divider">
+
+            <section id="welcome" class="welcome-hero">
+                <div class="container">
+                    <div class="welcome-hero-txt">
+                        <h2>CloudShop<br>Encuentra lo que <br>necesitas</h2>
+                        <p>A un clic de distancia</p>
+                        <h3>Rubros que cubrimos</h3>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="list-topics" class="list-topics">
+                <div class="container">
+                    <div class="list-topics-content">
+                        <ul>
+                            <li>
+                                <div class="single-list-topics-content">
+                                    <div class="single-list-topics-icon">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/4257/4257508.png" alt="Ferretería Icon">
+                                    </div>
+                                    <h2><a href="#tienda">Ferretería</a></h2>
+                                    <p>Productos de calidad</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="single-list-topics-content">
+                                    <div class="single-list-topics-icon">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/1051/1051060.png" alt="Moda Icon">
+                                    </div>
+                                    <h2><a href="#tienda">Moda</a></h2>
+                                    <p>Calidad, Elegancia y Estilo</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="single-list-topics-content">
+                                    <div class="single-list-topics-icon">
+                                        <img src="https://png.pngtree.com/png-clipart/20230407/original/pngtree-computer-science-line-icon-png-image_9034468.png" alt="Tecnología Icon">
+                                    </div>
+                                    <h2><a href="#tienda">Tecnología</a></h2>
+                                    <p>Computadoras, tablets, celulares y más</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="single-list-topics-content">
+                                    <div class="single-list-topics-icon">
+                                        <img src="https://cdn-icons-png.flaticon.com/512/102/102649.png" alt="Seguridad">
+                                    </div>
+                                    <h2><a href="#contacto">Segurida</a></h2>
+                                    <p>Reserva tu pedido con seguridad</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </section> 
+
+        <!-- SECCIÓN SOBRE NOSOTROS -->
+        <section id="sobre-nosotros" class="section">
+            <div class="about-container">
+                <div class="about-header">
+                    <h2>Nuestra Trayectoria, Visión y Propósito</h2>
+                    <p class="subtitle">Conoce lo que nos hace diferentes</p>
+                </div>
+        
+                <div class="about-timeline">
+                    <!-- 2025 - Lanzamiento -->
+                    <div class="timeline-item">
+                        <div class="timeline-year">2025</div>
+                        <div class="timeline-content">
+                            <h3>Surgimiento de CloudShop</h3>
+                            <p>
+                                CloudShop surge como una iniciativa independiente ante los desafíos del comercio hondureño. Identificamos problemas como la falta de confianza, credibilidad y acceso a ciertos productos o negocios en el territorio nacional. Frente a este desafío, decidimos construir una red comercial segura, transparente y eficiente. Si alguien busca algo, nosotros nos encargamos de encontrarlo por ellos.
+                            </p>
+                            <div class="timeline-badge">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- 2028 - Expansión -->
+                    <div class="timeline-item">
+                        <div class="timeline-year">2029</div>
+                        <div class="timeline-content">
+                            <div class="milestone-marker milestone-2028">
+                                <span>Objetivo para 2029</span>
+                                <div class="marker-pointer"></div>
+                            </div>
+                            <h3>Modelo Autónomo de Análisis y Respuesta Comercial</h3>
+                            <p>
+                                Hacia 2029, visualizamos la integración de un modelo inteligente capaz de comprender el comportamiento del mercado en tiempo real. Esta tecnología, potenciada por IA, no solo identificará patrones complejos de consumo, sino que anticipará necesidades, optimizará la toma de decisiones y ofrecerá respuestas precisas y personalizadas. Más que automatizar, buscamos evolucionar: construir una red comercial autosuficiente, ágil y profundamente conectada con cada usuario. Una plataforma que no reacciona... sino que se adelanta.
+                            </p>
+                            <div class="timeline-badge">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2030 - Visión Futurista -->
+                    <div class="timeline-item">
+                        <div class="timeline-year">2031</div>
+                        <div class="timeline-content">
+                            <div class="milestone-marker milestone-2030">
+                                <span>Objetivo para 2031</span>
+                                <div class="marker-pointer"></div>
+                            </div>
+                            <h3>Ecosistema Comercial Regional</h3>
+                            <p>
+                                Para 2031, habremos consolidado una plataforma inteligente que integra comercio local y transfronterizo en toda Centroamérica. Mediante asistentes multimodales por voz y texto, y logística optimizada, conectaremos usuarios y negocios en una red dinámica, ágil y adaptable.
+                            </p>
+                            <div class="timeline-badge future-glow">
+                                <i class="fas fa-atom"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="about-values">
+                    <h3>Nuestros Valores Fundamentales</h3>
+                    <div class="values-grid">
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fas fa-hand-holding-heart"></i>
+                            </div>
+                            <h4>Fiabilidad</h4>
+                            <p>Construimos relaciones duraderas basadas en la transparencia, la responsabilidad y la coherencia entre lo que prometemos y lo que entregamos.</p>
+                        </div>
+        
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <h4>Integridad</h4>
+                            <p>La base de nuestro crecimiento está en actuar con ética, respetando a cada persona y decisión como si fuera la más importante.</p>
+                        </div>
+        
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4>Calidad</h4>
+                            <p>Nos aseguramos de que cada producto cumpla con los más altos estándares de excelencia. Nuestro compromiso es que el cliente reciba exactamente lo que ve y espera, sin sorpresas ni decepciones.</p>
+                        </div>
+        
+                        <div class="value-card">
+                            <div class="value-icon">
+                                <i class="fas fa-hands-helping"></i>
+                            </div>
+                            <h4>Respeto</h4>
+                            <p>Promovemos una cultura organizacional basada en el respeto mutuo, sin distinción de género, raza o condición social. Creemos que el respeto es fundamental para construir relaciones sólidas, colaborativas y duraderas con clientes, colaboradores y socios.</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="about-mission">
+                    <div class="mission-card">
+                        <h3>Nuestra Misión</h3>
+                        <p>Facilitar el acceso a productos de calidad mediante una plataforma intuitiva que conecta necesidades con soluciones en el territorio nacional, proveendo seguridad,.</p>
+                    </div>
+        
+                    <div class="vision-card">
+                        <h3>Nuestra Visión</h3>
+                        <p>Ser reconocidos como el puente más confiable entre compradores y proveedores en Latinoamérica, destacando por nuestra innovación y servicio excepcional.</p>
+                    </div>
+                </div>
+        
+                <div class="about-team">
+                    <h3>Conoce a Nuestro Equipo</h3>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="member-photo" style="background-image: url('https://i.ibb.co/nNkpxmgM/gustavo-pic.jpg');"></div>
+                            <h4>Gustavo Cerrato</h4>
+                            <p class="position">Director de Finanzas</p>
+                            <p class="bio">Capacitado para análisis de estrategias de inversión, proyecciones financieras y gestión de recursos, con enfoque en la optimización de resultados y la toma de decisiones estratégicas.</p>
+                        </div>
+        
+                        <div class="team-member">
+                            <div class="member-photo" style="background-image: url('https://i.ibb.co/W4NBnLzy/erik-pic.jpg');"></div>
+                            <h4>Erik Molina</h4>
+                            <p class="position">Director General</p>
+                            <p class="bio">Estudios en Ingeniería en Sistemas y Desarrollo de Software, con enfoque en innovación tecnológica y liderazgo empresarial. Desarrollador de CloudShop. con visión de transformar el comercio regional mediante soluciones digitales.</p>
+                        </div>
+        
+                        <div class="team-member">
+                            <div class="member-photo" style="background-image: url('https://i.ibb.co/tpCbTQrG/bryan-pic.jpg');"></div>
+                            <h4>Bryan Navas</h4>
+                            <p class="position">Director de Operaciones</p>
+                            <p class="bio">Especialista en logística y cadena de suministro, con experiencia en planificación de entregas y recepción de productos a escala industrial a nivel nacional y regional, garantizando eficiencia en procesos y liderazgo de equipos operativos con resultados significativos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- SECCIÓN CONTACTO -->
+        <section id="contacto" class="section">
+            <div class="contact-container">
+                <div class="contact-header">
+                    <h2>Contáctanos</h2>
+                    <p class="subtitle">Estamos aquí para ayudarte</p>
+                </div>
+
+                <div class="contact-grid">
+                    <!-- Columna de información -->
+                    <div class="contact-info">
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3>Operamos en</h3>
+                            <p>San Pedro Sula, Honduras<br> <!--espacio disponible para añadir datos--></p>
+                            <p class="schedule">Lunes a Sabado: 9am - 5pm</p>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <h3>WhatsApp Directo</h3>
+                            <a href="https://wa.me/50488118862" target="_blank" class="whatsapp-btn">
+                                <i class="fab fa-whatsapp"></i> Chatear ahora
+                            </a>
+                            <p class="response-time">Respuesta en menos de 15 minutos</p>
+                        </div>
+
+                        <div class="info-card social-card">
+                            <div class="info-icon">
+                                <i class="fas fa-hashtag"></i>
+                            </div>
+                            <h3>Síguenos</h3>
+                            <div class="social-links">
+                                <a href="https://www.facebook.com/share/1C2zVrUgYi/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://whatsapp.com/channel/0029VbAlIDXJpe8iRdKup401" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                <a href="https://www.instagram.com/cloudshophn_?igsh=bmhydmJlZWtzYTFn" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.tiktok.com/@cloudshophn_?_t=ZM-8zM8EWTJ3d2&_r=1" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                                <!-- <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulario compacto -->
+                    <div class="contact-form">
+                        <h3>Enviar mensaje por WhatsApp</h3>
+                        <form id="whatsappForm" class="compact-form">
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" placeholder="Tu nombre completo" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" placeholder="Tu correo electrónico" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <select id="subject" name="subject" required>
+                                    <option value="" disabled selected>Motivo de contacto</option>
+                                    <option value="Consulta general">Consulta general</option>
+                                    <option value="Información de ventas">Información de ventas</option>
+                                    <option value="Información de descuentos">Información de descuentos</option>
+                                    <option value="Información de promociones">Información de promociones</option>
+                                    <option value="Busco un producto">Busco un producto</option>
+                                    <option value="Herramientas">Información sobre herramientas</option>
+                                    <option value="Moda">Información sobre moda</option>
+                                    <option value="Tecnología">Información sobre tecnología</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea id="message" name="message" placeholder="Tu mensaje..." rows="3" maxlength="250" required></textarea>
+                                <div id="message-counter" class="char-counter">0/250 caracteres</div>
+                            </div>
+                            
+                            <div class="form-footer">
+                                <div class="privacy-link">
+                                    <input type="checkbox" id="privacy" name="privacy" required>
+                                    <label for="privacy">Acepto las <a href="#politica-privacidad">políticas de privacidad</a></label>
+                                </div>
+                                <button type="submit" class="submit-btn">
+                                    Enviar a WhatsApp <i class="fab fa-whatsapp"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- SECCIÓN UNIRTE CON VIDEO RESPONSIVE -->
+        <section id="unirte" class="section">
+            <!-- Video Background Responsive -->
+            <div class="video-background">
+                <!-- Video para escritorio -->
+                <video class="desktop-video" autoplay muted loop playsinline>
+                    <source src="" type="video/mp4">
+                    <source src="https://videos.pexels.com/video-files/7691553/7691553-hd_1920_1080_25fps.mp4" type="video/webm">
+                </video>
+                
+                <!-- Video para móviles/tablets -->
+                <video class="mobile-video" autoplay muted loop playsinline>
+                    <source src="media/videos/handsake2.mp4" type="video/mp4">
+                    <source src="https://videos.pexels.com/video-files/7660169/7660169-uhd_1440_2560_25fps.mp4" type="video/webm">
+                </video>
+                
+                <div class="video-overlay"></div>
+            </div>
+            
+            <div class="unirte-container">
+                <div class="unirte-header">
+                    <h2>Únete a CloudShop</h2>
+                    <p class="subtitle">Invitamos a inversionistas y comerciantes alineados con nuestros rubros principales</p>
+                </div>
+                
+                <div class="unirte-content">
+                    <!-- Tarjetas de beneficios con canvas -->
+                    <div class="unirte-benefits">
+                        <div class="benefit-card investor-card">
+                            <canvas id="particles-inversionistas" class="particles-canvas"></canvas>
+                            <div class="benefit-icon">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h3>Para Inversionistas</h3>
+                                <ul class="benefit-list">
+                                    <li><i class="fas fa-check-circle"></i> Oportunidad en mercado en crecimiento</li>
+                                    <li><i class="fas fa-check-circle"></i> Retornos atractivos</li>
+                                    <li><i class="fas fa-check-circle"></i> Modelo de negocio probado</li>
+                                    <li><i class="fas fa-check-circle"></i> Equipo experimentado</li>
+                                    <li><i class="fas fa-check-circle"></i> Tecnología innovadora</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="benefit-card commerce-card">
+                            <canvas id="particles-comerciantes" class="particles-canvas"></canvas>
+                            <div class="benefit-icon">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="benefit-content">
+                                <h3>Para Comerciantes</h3>
+                                <ul class="benefit-list">
+                                    <li><i class="fas fa-check-circle"></i> Mayor visibilidad</li>
+                                    <li><i class="fas fa-check-circle"></i> Acceso a nueva clientela</li>
+                                    <li><i class="fas fa-check-circle"></i> Plataforma tecnológica avanzada</li>
+                                    <li><i class="fas fa-check-circle"></i> Soporte comercial</li>
+                                    <li><i class="fas fa-check-circle"></i> Crecimiento escalable</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Formulario -->
+                    <div class="unirte-form">
+                        <h3 class="form-title">Envía tu solicitud </h3>
+                        <form id="unirseForm">
+                            <div class="form-group">
+                                <input type="text" id="nombre" name="nombre" placeholder="Nombre completo" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <select id="interes" name="interes" required>
+                                    <option value="" disabled selected>Tipo de interés</option>
+                                    <option value="inversion">Inversión</option>
+                                    <option value="comercio">Comercio</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group" id="rubroContainer" style="display: none;">
+                                <select id="rubro" name="rubro">
+                                    <option value="" disabled selected>Selecciona tu rubro</option>
+                                    <option value="ferreteria">Ferretería</option>
+                                    <option value="moda">Moda</option>
+                                    <option value="tecnologia">Tecnología</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group" id="empresaContainer" style="display: none;">
+                                <input type="text" id="empresa" name="empresa" placeholder="Nombre de tu empresa o negocio">
+                            </div>
+                            
+                            <button type="button" class="whatsend" onclick="enviarWhatsApp()">
+                                <i class="fab fa-whatsapp"></i> Enviar solicitud
+                            </button>
+                            
+                            <div class="form-disclaimer">
+                                <i class="fas fa-info-circle"></i>
+                                <p>Todas las solicitudes serán evaluadas según su alineación con nuestros rubros principales: <strong>Ferretería, Moda y Tecnología</strong>. Nos pondremos en contacto contigo en un plazo máximo de 48 horas.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- SECCIÓN TIENDA -->
+        <section id="tienda" class="section">
+            <!-- Video de fondo -->
+            <video autoplay muted loop playsinline class="compuvideo">
+                <source src="https://videos.pexels.com/video-files/6529560/6529560-hd_1920_1080_30fps.mp4" type="video/mp4">
+                Tu navegador no soporta video HTML5.
+            </video>
+
+            <video autoplay muted loop playsinline class="videomobil">
+                <source src="https://videos.pexels.com/video-files/7563834/7563834-hd_1080_1920_30fps.mp4" type="video/mp4">
+                Tu navegador no soporta video HTML5.
+            </video>
+
+            <!-- Capa de oscurecimiento (opcional) -->
+            <div class="overlay"></div>
+
+            <!-- Contenido centrado -->
+            <div class="tienda-content">
+                <a href="https://cloudshophn.github.io/app/onlinestore" class="tienda-btn">
+                    Ir a la tienda
+                    <canvas class="btn-canvas"></canvas>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <canvas id="footer-particles"></canvas>
+        <!-- Ola decorativa -->
+        <div class="footer-wave">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#25D366"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#25D366"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#25D366"></path>
+            </svg>
+        </div>
+
+        <div class="footer-content">
+            <!-- Logo y Redes -->
+            <div class="footer-brand">
+                <h3 class="logo">CloudShop <span> <!--espacio disponible para agregar SA--></span></h3>
+                <p>Conectando oportunidades, construyendo futuro</p>
+                
+                <div class="social-links">
+                    <a href="https://www.facebook.com/share/1C2zVrUgYi/" target="_blank" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://whatsapp.com/channel/0029VbAlIDXJpe8iRdKup401" target="_blank" class="social-icon" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/cloudshophn_?igsh=bmhydmJlZWtzYTFn" target="_blank" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@cloudshophn_?_t=ZM-8zM8EWTJ3d2&_r=1" target="_blank" class="social-icon" aria-label="Tik Tok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <!-- Menú Footer -->
+            <div class="footer-menu">
+                <h4 class="menu-title">Navegación Rápida</h4>
+                <ul class="footer-nav">
+                    <li><a href="#inicio" class="footer-link"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                    <li><a href="#sobre-nosotros" class="footer-link"><i class="fas fa-chevron-right"></i> Sobre Nosotros</a></li>
+                    <li><a href="#contacto" class="footer-link"><i class="fas fa-chevron-right"></i> Contacto</a></li>
+                    <li><a href="#unirte" class="footer-link"><i class="fas fa-chevron-right"></i> Ser Parte</a></li>
+                    <li><a href="#tienda" class="footer-link"><i class="fas fa-chevron-right"></i> Tienda</a></li>
+                </ul>
+            </div>
+
+            <!-- Contacto -->
+            <div class="footer-contact">
+                <h4 class="contact-title">Contáctanos</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> San Pedro Sula, Cortes</li>
+                    <li><i class="fas fa-phone-alt"></i> +504 8811-8862</li>
+                    <li><i class="fas fa-envelope"></i> cloudshophn@gmail.com</li>
+                </ul>
+                
+
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <p>© 2025 <strong>CloudShop</strong>. Todos los derechos reservados.</p>
+            <div class="legal-links">
+                <a href="#">Términos de Servicio</a>
+                <a href="#">Política de Privacidad</a>
+                <a href="#">Cookies</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.getElementById('message');
+            const charCounter = document.getElementById('message-counter');
+            const maxLength = 250;
+            
+            updateCharCounter();
+            
+            textarea.addEventListener('input', updateCharCounter);
+            
+            function updateCharCounter() {
+                const currentLength = textarea.value.length;
+                charCounter.textContent = `${currentLength}/${maxLength} caracteres`;
+                
+                charCounter.classList.remove('warning', 'error');
+                
+                if (currentLength >= maxLength) {
+                    charCounter.classList.add('error');
+                } else if (currentLength >= maxLength * 0.9) {
+                    charCounter.classList.add('warning');
+                }
+            }
+        });
+    </script>
+
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) ||
+                (e.ctrlKey && e.key === 'u')
+            ) {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+
+        window.addEventListener('devtoolschange', function(e) {
+            if (e.detail.isOpen) {
+                alert('Por favor, no intentes inspeccionar el código.');
+                window.location.reload();
+            }
+        });
+
+    
+        //(function() {
+            //let devtools = { open: false };
+            //const threshold = 160;
+            //const checkDevTools = function() {
+                //const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                //const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                //if (widthThreshold || heightThreshold) {
+                   // if (!devtools.open) {
+                      //  devtools.open = true;
+                       // alert('Acceso a herramientas de desarrollador detectado. La página se recargará.');
+                       // window.location.reload();
+                   // }
+               // } else {
+                //    devtools.open = false;
+               // }
+            //};
+            //setInterval(checkDevTools, 1000);
+        //})();
+    </script> 
+
+    <script src="informativesection/assets/scripts/inicio.js"></script>
+    <script src="informativesection/assets/scripts/slider.js"></script>
+    <script type="module" src="informativesection/assets/scripts/searchbar.js"></script>
+    <script src="informativesection/assets/scripts/animation1.js"></script>
+    <script src="informativesection/assets/scripts/about.js"></script>
+    <script src="informativesection/assets/scripts/reachout.js"></script>
+    <script src="informativesection/assets/scripts/canva.js"></script>
+    <script src="informativesection/assets/scripts/particucanva.js"></script>
+</body>
+</html>

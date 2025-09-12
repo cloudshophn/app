@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de Compra - CloudShop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="onlinestore/purchasedetails/assets/modal.css">
+    <!-- jsPDF y jsPDF-AutoTable para generar el PDF (se usarán después) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Favicon -->
+  <link rel="icon" href="https://i.ibb.co/KpHpPfWF/cloudshop-pic.jpg" type="image/png">
+
+</head>
+<body>
+    <!-- Modal para verificación de pedido -->
+    <div id="orderVerificationModal" class="modal">
+        <div class="modal-content">
+            <h2 class="modal-title">Verificación de Pedido</h2>
+            <form id="orderVerificationForm" class="modal-form">
+                <div class="form-group">
+                    <label for="orderPersonalId">
+                        <i class="fas fa-id-card mr-2"></i>Número de Identidad
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-id-card-alt input-icon"></i>
+                        <input type="text" id="orderPersonalId" placeholder="0801-1990-12345" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="orderNumber">
+                        <i class="fas fa-receipt mr-2"></i>Número de Orden
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-file-invoice input-icon"></i>
+                        <input type="text" id="orderNumber" placeholder="Ej: ORD-123456" required>
+                    </div>
+                </div>
+                <div id="errorMessage" class="error-message" style="display: none; color: #ef4444; font-size: 0.9rem; text-align: center;"></div>
+                <div class="modal-actions">
+                    <button type="button" id="exitOrderModal" class="btn btn-secondary">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Salir
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-check-circle mr-2"></i>Confirmar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Contenedor para el botón de detalles -->
+    <div id="detailsContainer" class="details-container" style="display: none;">
+        <h2 class="details-title">Detalles de la Compra</h2>
+        <button id="viewDetailsButton" class="btn btn-primary">
+            <i class="fas fa-file-pdf mr-2"></i>Ver detalles de mi compra
+        </button>
+    </div>
+
+    <script type="module" src="onlinestore/purchasedetails/assets/scripts/modal.js"></script>
+    
+</body>
+</html>

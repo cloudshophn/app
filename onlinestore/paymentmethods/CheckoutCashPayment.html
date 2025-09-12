@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloudShop - Pago en Efectivo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="assets/styles/cashpay.css">
+</head>
+<body class="bg-gray-50">
+  <!-- Modal para carrito vacío -->
+  <div id="emptyCashCartModal" class="cash-modal hidden">
+    <div class="cash-modal-content">
+      <div class="cash-icon-container">
+        <span class="material-icons-outlined text-5xl text-blue-500">shopping_cart</span>
+      </div>
+      <h2 class="text-2xl font-semibold text-gray-800 mb-3">Lista de compras vacía</h2>
+      <p class="text-gray-600 mb-6">Redirigiendo a onlinestore.html en <span id="countdown" class="font-bold text-blue-600">5</span> segundos...</p>
+      <button onclick="window.location.href='https://cloudshophn.github.io/app/onlinestore'" class="cash-btn-primary">
+        <span class="material-icons-outlined mr-2">shopping_bag</span>
+        Ir a la tienda ahora
+      </button>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-8 max-w-7xl">
+    <div class="flex items-center mb-8">
+      <span class="material-icons-outlined text-4xl text-blue-600 mr-3">attach_money</span>
+      <h1 class="text-3xl font-bold text-gray-800">Pago en Efectivo</h1>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Lista de compras - Columna izquierda -->
+      <div class="cash-cart-list bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center mb-6">
+          <span class="material-icons-outlined text-2xl text-blue-600 mr-2">receipt</span>
+          <h2 class="text-xl font-semibold text-gray-800">Resumen de tu compra</h2>
+        </div>
+        
+        <div id="cashCartItems" class="mb-4"></div>
+        
+        <div class="cash-totals-container">
+          <div class="cash-total-row">
+            <span>Subtotal</span>
+            <span id="cashSubtotal">L 0.00</span>
+          </div>
+          <div class="cash-total-row">
+            <span>Envío</span>
+            <span id="cashShipping">L 0.00</span>
+          </div>
+          <div class="cash-total-row">
+            <span>Impuestos</span>
+            <span id="cashTaxes">L 0.00</span>
+          </div>
+          <div class="cash-total-row cash-grand-total">
+            <span>Total</span>
+            <span id="cashGrandTotal">L 0.00</span>
+          </div>
+        </div>
+        
+        <div class="cash-security-badge mt-6">
+          <span class="material-icons-outlined text-green-500 mr-2">verified</span>
+          <span class="text-sm text-gray-600">Compra 100% segura</span>
+        </div>
+      </div>
+
+      <!-- Formulario de contacto - Columna derecha -->
+      <div class="cash-form-container bg-white rounded-xl shadow-lg p-6">
+        <div class="flex items-center mb-6">
+          <span class="material-icons-outlined text-2xl text-blue-600 mr-2">contact_phone</span>
+          <h2 class="text-xl font-semibold text-gray-800">Datos de contacto</h2>
+        </div>
+        
+        <form id="cashContactForm" class="space-y-5">
+          <!-- Nombre completo -->
+          <div class="cash-form-group">
+            <label for="fullName" class="block mb-2 font-medium text-gray-700">
+              <span class="material-icons-outlined align-middle mr-2">person</span>
+              Nombre completo
+            </label>
+            <div class="relative">
+              <span class="material-icons-outlined absolute left-3 top-3 text-gray-400">person_outline</span>
+              <input type="text" id="fullName" class="pl-10 w-full border rounded-md py-2 px-3" placeholder="Nombre completo" required>
+            </div>
+          </div>
+
+          <!-- ID de la persona -->
+          <div class="cash-form-group">
+            <label for="personalId" class="block mb-2 font-medium text-gray-700">
+              <span class="material-icons-outlined align-middle mr-2">badge</span>
+              ID de la persona
+            </label>
+            <div class="relative">
+              <span class="material-icons-outlined absolute left-3 top-3 text-gray-400">fingerprint</span>
+              <input type="text" id="personalId" class="pl-10 w-full border rounded-md py-2 px-3" placeholder="0801-1990-12345" maxlength="15" required>
+            </div>
+          </div>
+
+          <!-- Número de teléfono -->
+          <div class="cash-form-group">
+            <label for="phoneNumber" class="block mb-2 font-medium text-gray-700">
+              <span class="material-icons-outlined align-middle mr-2">phone</span>
+              Número de teléfono
+            </label>
+            <div class="relative">
+              <span class="material-icons-outlined absolute left-3 top-3 text-gray-400">phone</span>
+              <input type="tel" id="phoneNumber" class="pl-10 w-full border rounded-md py-2 px-3" placeholder="12345678" pattern="[0-9]{8}" maxlength="8" required>
+            </div>
+          </div>
+
+          <!-- Email para recibo -->
+          <div class="cash-form-group">
+            <label for="emailReceipt" class="block mb-2 font-medium text-gray-700">
+              <span class="material-icons-outlined align-middle mr-2">email</span>
+              Email para recibo
+            </label>
+            <div class="relative">
+              <span class="material-icons-outlined absolute left-3 top-3 text-gray-400">alternate_email</span>
+              <input type="email" id="emailReceipt" class="pl-10 w-full border rounded-md py-2 px-3" placeholder="tu@email.com" required>
+            </div>
+          </div>
+
+          <!-- Ubicación de Residencia -->
+          <div class="cash-form-group">
+            <label for="ubicacionResidencia" class="block mb-2 font-medium text-gray-700">
+              <span class="material-icons-outlined align-middle mr-2">location_on</span>
+              Ubicación de Residencia
+            </label>
+            <div class="relative">
+              <span class="material-icons-outlined absolute left-3 top-3 text-gray-400">location_on</span>
+              <input type="text" id="ubicacionResidencia" class="pl-10 w-full border rounded-md py-2 px-3" placeholder="Ejemplo: Tegucigalpa, Francisco Morazán" required>
+            </div>
+          </div>
+
+          <button type="submit" class="cash-contact-btn w-full">
+            <i class="fab fa-whatsapp mr-2"></i>
+            Poner en contacto
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="assets/scripts/cashpayment.js"></script>
+
+</body>
+</html>
