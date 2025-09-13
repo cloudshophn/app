@@ -28,11 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para formatear el número de identidad (XXXX-XXXX-XXXXX)
     function formatPersonalId(value) {
-        // Limpiar todo lo que no sea número
         const cleaned = value.replace(/\D/g, '');
-        // Limitar a 13 dígitos
         const limited = cleaned.slice(0, 13);
-        // Aplicar formato: XXXX-XXXX-XXXXX
         let formatted = '';
         for (let i = 0; i < limited.length; i++) {
             if (i === 4 || i === 8) {
@@ -52,18 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         e.target.value = newValue;
 
-        // Ajustar la posición del cursor
         let newCursorPosition = cursorPosition;
         if (cleanedValue.length > oldValue.replace(/\D/g, '').length) {
-            // Se añadió un carácter no numérico, ajustar cursor
             newCursorPosition = cursorPosition;
         } else if (newValue.length > oldValue.length) {
-            // Se añadió un guion, mover el cursor después del guion
             if (newValue[cursorPosition - 1] === '-') {
                 newCursorPosition = cursorPosition + 1;
             }
         } else if (newValue.length < oldValue.length) {
-            // Se borró un guion, ajustar el cursor antes
             if (oldValue[cursorPosition] === '-') {
                 newCursorPosition = cursorPosition - 1;
             }
@@ -74,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Listener para formatear el número de orden mientras se escribe
     orderNumberInput.addEventListener('input', (e) => {
         const cleanedValue = e.target.value.replace(/\D/g, '');
-        e.target.value = cleanedValue.slice(0, 8); // Limitar a 8 dígitos
+        e.target.value = cleanedValue.slice(0, 8);
     });
 
     // Abrir el modal al cargar la página
@@ -82,13 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cerrar la página al hacer clic en "Salir"
     exitButton.addEventListener('click', () => {
-        window.location.href = '/'; // Redirigir a la página principal
+        window.location.href = '/';
     });
 
     // Función para validar las credenciales del pedido
     async function validateOrderCredentials(orderNumber, personalId) {
         try {
-            // Validar que el número de orden tenga exactamente 8 dígitos
             if (orderNumber.length !== 8) {
                 return { 
                     success: false, 
@@ -96,13 +88,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
             }
             
-            // Referencia a la orden específica en myorderdetails
             const orderRef = ref(db, `myorderdetails/${orderNumber}`);
             const snapshot = await get(orderRef);
             
             if (snapshot.exists()) {
                 const orderData = snapshot.val();
-                // Comparar el ID personal (sin guiones para la comparación)
                 const storedPersonalId = orderData.customer?.personalId || '';
                 const cleanedStoredId = storedPersonalId.replace(/-/g, '');
                 const cleanedInputId = personalId.replace(/-/g, '');
@@ -141,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const personalId = personalIdInput.value.trim();
         const orderNumber = orderNumberInput.value.trim();
         
-        // Validaciones básicas
         if (!personalId || !orderNumber) {
             showError('Por favor, complete todos los campos');
             return;
@@ -152,45 +141,37 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Validar que el número de orden tenga exactamente 8 dígitos
         if (orderNumber.length !== 8) {
             showError('El número de orden debe tener exactamente 8 dígitos');
             return;
         }
         
-        // Ocultar mensaje de error previo
         errorMessage.style.display = 'none';
         
-        // Mostrar indicador de carga
         const submitButton = verificationForm.querySelector('button[type="submit"]');
         const originalText = submitButton.innerHTML;
         submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Verificando...';
         submitButton.disabled = true;
         
         try {
-            // Validar credenciales
             const validationResult = await validateOrderCredentials(orderNumber, personalId);
             
             if (validationResult.success) {
-                // Credenciales válidas - cerrar modal y mostrar botón de detalles
                 modal.classList.remove('open');
                 detailsContainer.style.display = 'block';
                 
-                // Guardar información de la orden para usar en el PDF
                 sessionStorage.setItem('validatedOrder', JSON.stringify({
                     orderNumber: validationResult.orderNumber,
                     orderData: validationResult.orderData
                 }));
                 
             } else {
-                // Credenciales inválidas - mostrar error
                 showError(validationResult.error);
             }
         } catch (error) {
             console.error('Error:', error);
             showError('Error al verificar la orden. Intente nuevamente.');
         } finally {
-            // Restaurar botón
             submitButton.innerHTML = originalText;
             submitButton.disabled = false;
         }
@@ -214,259 +195,389 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Función para generar PDF (placeholder - implementar después)
     // Función para generar PDF con los detalles de la orden
-async function generateOrderPDF(orderNumber, orderData) {
-    // Inicializar jsPDF
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    
-    // Configuración inicial
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 15;
-    let yPosition = margin;
-    
-    // Obtener nombres de productos desde Firebase
-    const productNames = await getProductNames(orderData.products);
-    
-    // ===== ENCABEZADO =====
-    doc.setFontSize(20);
-    doc.setFont(undefined, 'bold');
-    doc.setTextColor(59, 130, 246); // Azul
-    doc.text("CloudShop", pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 10;
-    
-    doc.setFontSize(10);
-    doc.setFont(undefined, 'normal');
-    doc.setTextColor(0, 0, 0); // Negro
-    doc.text("San Pedro Sula, Cortés, Honduras", pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 5;
-    doc.text("cloudshophn@gmail.com", pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 5;
-    doc.text("+504 8811-8862", pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 15;
-    
-    // Aclaración de no factura
-    doc.setFontSize(12);
-    doc.setFont(undefined, 'bold');
-    doc.setTextColor(255, 0, 0); // Rojo
-    doc.text("ESTO NO ES UNA FACTURA", pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 10;
-    
-    // Título
-    doc.setFontSize(16);
-    doc.setTextColor(0, 0, 0); // Negro
-    doc.text("Detalles de su compra", pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 20;
-    
-    // ===== DATOS DEL CLIENTE =====
-    doc.setFontSize(12);
-    doc.setFont(undefined, 'bold');
-    doc.text("DATOS DEL CLIENTE", margin, yPosition);
-    yPosition += 10;
-    
-    // Tabla de datos del cliente
-    const clientData = [
-        ["Nombre:", orderData.customer.fullName || "N/A"],
-        ["Número de orden:", orderNumber],
-        ["Estado de orden:", orderData.status || "pending"],
-        ["Teléfono:", orderData.customer.phoneNumber || "N/A"],
-        ["Dirección:", orderData.customer.ubicacionResidencia || "N/A"],
-        ["Identidad:", orderData.customer.personalId || "N/A"],
-        ["Fecha:", formatDate(orderData.timestamp)],
-        ["Método de pago:", orderData.method || "efectivo"]
-    ];
-    
-    doc.setFont(undefined, 'normal');
-    doc.setFontSize(10);
-    
-    clientData.forEach(([label, value]) => {
-        doc.setFont(undefined, 'bold');
-        doc.text(label, margin, yPosition);
-        doc.setFont(undefined, 'normal');
+    async function generateOrderPDF(orderNumber, orderData) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
         
-        // Dividir valores largos en múltiples líneas
-        const maxWidth = 80;
-        const lines = doc.splitTextToSize(value, maxWidth);
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const margin = 20;
+        let yPosition = margin;
         
-        if (lines.length > 1) {
-            doc.text(lines[0], margin + 40, yPosition);
-            for (let i = 1; i < lines.length; i++) {
-                yPosition += 5;
-                doc.text(lines[i], margin + 40, yPosition);
+        // Función para agregar pie de página - CORREGIDA PARA CONSISTENCIA EN TODAS LAS PÁGINAS
+        function addFooter(pageNumber, totalPages) {
+            const footerY = pageHeight - 25;
+            
+            doc.setDrawColor(220, 220, 220);
+            doc.line(margin, footerY, pageWidth - margin, footerY);
+            
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(100, 100, 100);
+            
+            // Texto de contacto - DIVIDIDO PARA EVITAR DISTORSIÓN
+            const contactText = "cloudstophn@gmail.com | +504 8811-8862";
+            const contactLines = doc.splitTextToSize(contactText, pageWidth - 2 * margin - 50);
+            doc.text(contactLines, margin, footerY + 7);
+            
+            // Numeración de páginas
+            doc.text(`Página ${pageNumber} de ${totalPages}`, pageWidth - margin, footerY + 7, { align: 'right' });
+        }
+        
+        // Obtener nombres de productos desde Firebase
+        const productNames = await getProductNames(orderData.products);
+        
+        // ===== ENCABEZADO =====
+        try {
+            doc.addImage(await getLogoBase64(), 'PNG', margin, yPosition, 40, 15);
+        } catch (e) {
+            doc.setFontSize(20);
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(59, 89, 152);
+            doc.text("CloudShop", margin, yPosition + 10);
+        }
+        
+        doc.setFontSize(9);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(100, 100, 100);
+        doc.text("San Pedro Sula, Cortés, Honduras", margin, yPosition + 20);
+        doc.text("cloudstophn@gmail.com | +504 8811-8862", margin, yPosition + 25);
+        
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(59, 89, 152);
+        doc.text(`ORDEN #${orderNumber}`, pageWidth - margin, yPosition + 10, { align: 'right' });
+        
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Fecha: ${formatDate(orderData.timestamp)}`, pageWidth - margin, yPosition + 20, { align: 'right' });
+        
+        yPosition += 35;
+        
+        doc.setDrawColor(59, 89, 152);
+        doc.setLineWidth(0.5);
+        doc.line(margin, yPosition, pageWidth - margin, yPosition);
+        yPosition += 15;
+        
+        doc.setFontSize(16);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(40, 40, 40);
+        doc.text("DETALLES DE COMPRA", pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 10;
+        
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "italic");
+        doc.setTextColor(255, 87, 34);
+        doc.text("DOCUMENTO INFORMATIVO - NO ES UNA FACTURA FISCAL", pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 15;
+        
+        // ===== DATOS DEL CLIENTE =====
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(59, 89, 152);
+        doc.text("INFORMACIÓN DEL CLIENTE", margin, yPosition);
+        yPosition += 8;
+        
+        doc.setDrawColor(59, 89, 152);
+        doc.setLineWidth(0.3);
+        doc.line(margin, yPosition, margin + 70, yPosition);
+        yPosition += 10;
+        
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        
+        const clientInfoLeft = [
+            `Nombre:${orderData.customer.fullName || "N/A"}`,
+            `Teléfono:${orderData.customer.phoneNumber || "N/A"}`,
+            `Identidad:${orderData.customer.personalId || "N/A"}`
+        ];
+        
+        const clientInfoRight = [
+            `Dirección:${orderData.customer.ubicacionResidencia || "N/A"}`,
+            `Método de pago:${formatPaymentMethod(orderData.method)}`,
+            `Estado:${formatOrderStatus(orderData.status)}`
+        ];
+        
+        let tempY = yPosition;
+        clientInfoLeft.forEach(line => {
+            doc.setTextColor(40, 40, 40);
+            doc.text(line.split(':')[0] + ':', margin, tempY);
+            doc.setTextColor(100, 100, 100);
+            doc.text(line.split(':')[1], margin + 25, tempY);
+            tempY += 7;
+        });
+        
+        tempY = yPosition;
+        clientInfoRight.forEach(line => {
+            doc.setTextColor(40, 40, 40);
+            doc.text(line.split(':')[0] + ':', pageWidth / 2, tempY);
+            doc.setTextColor(100, 100, 100);
+            doc.text(line.split(':')[1], pageWidth / 2 + 25, tempY);
+            tempY += 7;
+        });
+        
+        yPosition = tempY + 15;
+        
+        if (yPosition > pageHeight - 100) {
+            doc.addPage();
+            yPosition = margin;
+        }
+        
+        // ===== TABLA DE PRODUCTOS =====
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(59, 89, 152);
+        doc.text("DETALLES DE PRODUCTOS", margin, yPosition);
+        yPosition += 8;
+        
+        doc.line(margin, yPosition, margin + 75, yPosition);
+        yPosition += 10;
+        
+        const tableData = [];
+        let subtotal = 0;
+        let totalShipping = 0;
+        
+        Object.entries(orderData.products).forEach(([proid, product]) => {
+            const productName = productNames[proid] || `Producto ${proid}`;
+            const price = product.price || 0;
+            const quantity = product.quantity || 0;
+            const productSubtotal = price * quantity;
+            const shipping = product.deliveryCost || 0;
+            
+            subtotal += productSubtotal;
+            totalShipping += shipping;
+            
+            const maxProductNameLength = 30;
+            const productNameLines = doc.splitTextToSize(
+                productName, 
+                maxProductNameLength
+            );
+            
+            tableData.push([
+                { content: productNameLines, styles: { valign: 'middle' } },
+                quantity.toString(),
+                `L ${price.toFixed(2)}`,
+                "L 0.00",
+                `L ${productSubtotal.toFixed(2)}`
+            ]);
+        });
+        
+        doc.autoTable({
+            startY: yPosition,
+            head: [
+                [
+                    { content: 'Producto', styles: { halign: 'left', fillColor: [59, 89, 152] } },
+                    { content: 'Cantidad', styles: { halign: 'center', fillColor: [59, 89, 152] } },
+                    { content: 'Precio Unit.', styles: { halign: 'right', fillColor: [59, 89, 152] } },
+                    { content: 'Impuesto', styles: { halign: 'right', fillColor: [59, 89, 152] } },
+                    { content: 'Subtotal', styles: { halign: 'right', fillColor: [59, 89, 152] } }
+                ]
+            ],
+            body: tableData,
+            theme: 'grid',
+            headStyles: {
+                fillColor: [59, 89, 152],
+                textColor: 255,
+                fontStyle: 'bold',
+                fontSize: 10,
+                cellPadding: 3
+            },
+            bodyStyles: {
+                fontSize: 9,
+                cellPadding: 3,
+                textColor: [40, 40, 40],
+                lineColor: [220, 220, 220],
+                lineWidth: 0.25
+            },
+            alternateRowStyles: {
+                fillColor: [245, 247, 250]
+            },
+            margin: { left: margin, right: margin },
+            tableWidth: 'auto',
+            columnStyles: {
+                0: { cellWidth: 65, halign: 'left' },
+                1: { cellWidth: 25, halign: 'center' },
+                2: { cellWidth: 30, halign: 'right' },
+                3: { cellWidth: 30, halign: 'right' },
+                4: { cellWidth: 30, halign: 'right' }
+            },
+            pageBreak: 'auto',
+            didDrawPage: (data) => {
+                // Aplicar pie de página en cada página después de dibujar
+                addFooter(data.pageNumber, doc.internal.getNumberOfPages());
             }
-            yPosition += 7;
-        } else {
-            doc.text(value, margin + 40, yPosition);
-            yPosition += 7;
-        }
-    });
-    
-    yPosition += 10;
-    
-    // ===== TABLA DE PRODUCTOS =====
-    doc.setFontSize(12);
-    doc.setFont(undefined, 'bold');
-    doc.text("DETALLES DE PRODUCTOS", margin, yPosition);
-    yPosition += 15;
-    
-    // Preparar datos para la tabla
-    const tableData = [];
-    let subtotal = 0;
-    let totalShipping = 0;
-    
-    Object.entries(orderData.products).forEach(([proid, product]) => {
-        const productName = productNames[proid] || `Producto ${proid}`;
-        const price = product.price || 0;
-        const quantity = product.quantity || 0;
-        const productSubtotal = price * quantity;
-        const shipping = product.deliveryCost || 0;
+        });
         
-        subtotal += productSubtotal;
-        totalShipping += shipping;
+        yPosition = doc.lastAutoTable.finalY + 15;
         
-        tableData.push([
-            productName,
-            quantity.toString(),
-            `L ${price.toFixed(2)}`,
-            "L 0.00", // Impuestos (siempre 0 según tu código)
-            `L ${productSubtotal.toFixed(2)}`
-        ]);
-    });
-    
-    // Crear tabla con AutoTable
-    doc.autoTable({
-        startY: yPosition,
-        head: [['Producto', 'Cantidad', 'Precio', 'Impuesto', 'Subtotal']],
-        body: tableData,
-        theme: 'grid',
-        headStyles: {
-            fillColor: [59, 130, 246],
-            textColor: 255,
-            fontStyle: 'bold'
-        },
-        styles: {
-            fontSize: 9,
-            cellPadding: 3
-        },
-        columnStyles: {
-            0: { cellWidth: 70 }, // Producto
-            1: { cellWidth: 20 }, // Cantidad
-            2: { cellWidth: 30 }, // Precio
-            3: { cellWidth: 30 }, // Impuesto
-            4: { cellWidth: 30 }  // Subtotal
+        if (yPosition > pageHeight - 50) {
+            doc.addPage();
+            yPosition = margin;
         }
-    });
-    
-    // Obtener la posición Y después de la tabla
-    yPosition = doc.lastAutoTable.finalY + 10;
-    
-    // ===== TOTALES =====
-    const total = subtotal + totalShipping;
-    
-    const totalsData = [
-        ["Subtotal:", `L ${subtotal.toFixed(2)}`],
-        ["Descuento:", "L 0.00"], // Siempre 0 según la estructura
-        ["Envío:", `L ${totalShipping.toFixed(2)}`],
-        ["Total:", `L ${total.toFixed(2)}`]
-    ];
-    
-    // Tabla de totales
-    doc.autoTable({
-        startY: yPosition,
-        body: totalsData,
-        theme: 'grid',
-        styles: {
-            fontSize: 10,
-            cellPadding: 3
-        },
-        bodyStyles: {
-            fillColor: [240, 240, 240]
-        },
-        columnStyles: {
-            0: { cellWidth: 30, fontStyle: 'bold' },
-            1: { cellWidth: 30, fontStyle: 'bold', halign: 'right' }
+        
+        // ===== TOTALES =====
+        const total = subtotal + totalShipping;
+        
+        doc.autoTable({
+            startY: yPosition,
+            body: [
+                ["Subtotal", `L ${subtotal.toFixed(2)}`],
+                ["Descuento", "L 0.00"],
+                ["Costo de envío", `L ${totalShipping.toFixed(2)}`],
+                ["TOTAL", `L ${total.toFixed(2)}`]
+            ],
+            theme: 'plain',
+            styles: {
+                fontSize: 10,
+                cellPadding: 3,
+                textColor: [40, 40, 40],
+                lineWidth: 0
+            },
+            columnStyles: {
+                0: { cellWidth: 40, fontStyle: 'bold', halign: 'right' },
+                1: { cellWidth: 40, fontStyle: 'bold', halign: 'right' }
+            },
+            margin: { left: pageWidth - margin - 85 },
+            willDrawCell: (data) => {
+                if (data.row.index === 3) {
+                    data.cell.styles.fontStyle = 'bold';
+                    data.cell.styles.fillColor = [245, 247, 250];
+                }
+            },
+            didDrawCell: (data) => {
+                if (data.row.index === 3) {
+                    doc.setDrawColor(59, 89, 152);
+                    doc.setLineWidth(0.5);
+                    doc.line(data.cell.x, data.cell.y - 2, data.cell.x + data.cell.width, data.cell.y - 2);
+                }
+            }
+        });
+        
+        yPosition = doc.lastAutoTable.finalY + 20;
+        
+        if (yPosition > pageHeight - 60) {
+            doc.addPage();
+            yPosition = margin;
         }
-    });
-    
-    yPosition = doc.lastAutoTable.finalY + 15;
-    
-    // ===== COMENTARIOS Y NOTAS =====
-    doc.setFontSize(10);
-    doc.setFont(undefined, 'italic');
-    doc.text("Comentarios:", margin, yPosition);
-    yPosition += 7;
-    
-    doc.setFont(undefined, 'normal');
-    const comments = "Gracias por su compra. Para consultas contacte a cloudshophn@gmail.com";
-    const commentLines = doc.splitTextToSize(comments, pageWidth - 2 * margin);
-    doc.text(commentLines, margin, yPosition);
-    yPosition += commentLines.length * 5 + 10;
-    
-    // Nota legal
-    doc.setFontSize(8);
-    doc.setTextColor(100, 100, 100);
-    const legalText = "**Nota: Este documento no es una factura oficial y no tiene validez fiscal. " +
-                     "Su finalidad es únicamente informativa, mostrando los detalles de su compra. " +
-                     "Conserve este comprobante para cualquier referencia o consulta sobre su pedido.";
-    
-    const legalLines = doc.splitTextToSize(legalText, pageWidth - 2 * margin);
-    doc.text(legalLines, margin, yPosition);
-    yPosition += legalLines.length * 4 + 10;
-    
-    // Pie de página
-    doc.setFontSize(8);
-    doc.setTextColor(0, 0, 0);
-    doc.text("cloudshophn@gmail.com    +504 8811-8862", pageWidth / 2, yPosition, { align: 'center' });
-    
-    // Guardar PDF
-    doc.save(`compra_${orderNumber}.pdf`);
-}
+        
+        // ===== INFORMACIÓN ADICIONAL =====
+        doc.setDrawColor(220, 220, 220);
+        doc.setLineWidth(0.5);
+        doc.line(margin, yPosition, pageWidth - margin, yPosition);
+        yPosition += 10;
+        
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(59, 89, 152);
+        doc.text("INFORMACIÓN ADICIONAL", margin, yPosition);
+        yPosition += 8;
+        
+        doc.setDrawColor(59, 89, 152);
+        doc.setLineWidth(0.3);
+        doc.line(margin, yPosition, margin + 80, yPosition);
+        yPosition += 10;
+        
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(100, 100, 100);
+        const thanksText = "Agradecemos su preferencia. Para consultas sobre su pedido, puede contactarnos a través de nuestros canales de atención al cliente.";
+        const thanksLines = doc.splitTextToSize(thanksText, pageWidth - 2 * margin);
+        doc.text(thanksLines, margin, yPosition);
+        yPosition += thanksLines.length * 5 + 8;
+        
+        if (yPosition > pageHeight - 30) {
+            doc.addPage();
+            yPosition = margin;
+        }
+        
+        doc.setFontSize(8);
+        doc.setFont("helvetica", "italic");
+        const legalText = "Este documento es un comprobante de compra informativo y no constituye una factura fiscal. Para cualquier reclamo o consulta, refiérase al número de orden proporcionado. Conserve este documento para sus registros.";
+        const legalLines = doc.splitTextToSize(legalText, pageWidth - 2 * margin);
+        doc.text(legalLines, margin, yPosition);
+        
+        // Aplicar pie de página a todas las páginas DESPUÉS DE TODO EL CONTENIDO
+        const totalPages = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+            doc.setPage(i);
+            addFooter(i, totalPages);
+        }
+        
+        doc.save(`Orden_${orderNumber}_CloudShop.pdf`);
+    }
 
-// Función para obtener nombres de productos desde Firebase
-async function getProductNames(products) {
-    const productNames = {};
-    
-    try {
-        const productosRef = ref(db, 'productsbylocation');
-        const snapshot = await get(productosRef);
-        const data = snapshot.val() || {};
+    // Función para obtener nombres de productos desde Firebase
+    async function getProductNames(products) {
+        const productNames = {};
         
-        // Buscar en toda la estructura de productsbylocation
-        Object.values(data).forEach(departamento => {
-            Object.values(departamento).forEach(ciudad => {
-                Object.entries(ciudad).forEach(([proid, productData]) => {
-                    if (products[proid]) {
-                        productNames[proid] = productData.nombre || `Producto ${proid}`;
-                    }
+        try {
+            const productosRef = ref(db, 'productsbylocation');
+            const snapshot = await get(productosRef);
+            const data = snapshot.val() || {};
+            
+            Object.values(data).forEach(departamento => {
+                Object.values(departamento).forEach(ciudad => {
+                    Object.entries(ciudad).forEach(([proid, productData]) => {
+                        if (products[proid]) {
+                            productNames[proid] = productData.nombre || `Producto ${proid}`;
+                        }
+                    });
                 });
             });
+        } catch (error) {
+            console.error('Error al obtener nombres de productos:', error);
+        }
+        
+        return productNames;
+    }
+
+    // Función para formatear fecha
+    function formatDate(timestamp) {
+        if (!timestamp) return "N/A";
+        
+        const date = new Date(timestamp);
+        return date.toLocaleDateString('es-HN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
         });
-    } catch (error) {
-        console.error('Error al obtener nombres de productos:', error);
     }
     
-    return productNames;
-}
-
-// Función para formatear fecha
-function formatDate(timestamp) {
-    if (!timestamp) return "N/A";
+    // Función para formatear método de pago
+    function formatPaymentMethod(method) {
+        if (!method) return "N/A";
+        
+        const methods = {
+            'efectivo': 'Efectivo',
+            'tarjeta': 'Tarjeta de Crédito/Débito',
+            'transferencia': 'Transferencia Bancaria'
+        };
+        
+        return methods[method] || method;
+    }
     
-    const date = new Date(timestamp);
-    return date.toLocaleDateString('es-HN', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-}
-
-    // Cerrar el modal con la tecla Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('open')) {
-            window.location.href = '/'; // Redirigir como el botón "Salir"
-        }
-    });
+    // Función para formatear estado de la orden
+    function formatOrderStatus(status) {
+        if (!status) return "N/A";
+        
+        const statuses = {
+            'pending': 'Pendiente',
+            'processing': 'En Proceso',
+            'shipped': 'Enviado',
+            'delivered': 'Entregado',
+            'cancelled': 'Cancelado'
+        };
+        
+        return statuses[status] || status;
+    }
+    
+    // Función para obtener logo en base64
+    async function getLogoBase64() {
+        return new Promise((resolve, reject) => {
+            reject("No logo available");
+        });
+    }
 });
