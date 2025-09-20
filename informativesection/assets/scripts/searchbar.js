@@ -92,7 +92,7 @@ function renderSuggestions(products, query) {
       try {
         const sanitizedName = sanitizeProductNameForUrl(product.nombre);
         const cleanId = cleanProid(product.proid);
-        const productUrl = `https://finditaskit.github.io/tiendaonline/onlinestore#product-${cleanId}~${sanitizedName}`;
+        const productUrl = `https://cloudshophn.github.io/app/onlinestore#product-${cleanId}~${sanitizedName}`;
         window.location.href = productUrl; // Redirigir a la página de la tienda
         searchInput.value = '';
         searchResults.classList.remove('show');
